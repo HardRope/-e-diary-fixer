@@ -53,19 +53,17 @@ def remove_chastisements(name):
 def create_commendation(name, lesson_name):
     child = get_child(name)
 
-    lessons = Lesson.objects.filter(
+    schoolchild_lessons = Lesson.objects.filter(
             year_of_study=child.year_of_study,
             group_letter=child.group_letter,
             subject__title=lesson_name
             )
 
-    if not lessons:
+    if not schoolchild_lessons:
         print('\nНеправильное название предмета.\n')
         return
 
-    lessons = lessons.order_by('date').reverse()
-
-    last_lesson = lessons.first()
+    last_lesson = schoolchild_lessons.order_by('-date').first()
 
     commendation = Commendation.objects.filter(
             schoolkid=child,
